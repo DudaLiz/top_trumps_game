@@ -83,6 +83,7 @@ def run():
     
     # added print statements so we can see which stats are being compared (Eduarda)
     # the computer isn't comparing the chosen stats (Eduarda)
+        
     print(f'My stat: {my_stat}')
     print(f'Opponent stat: {opponent_stat}')
 
