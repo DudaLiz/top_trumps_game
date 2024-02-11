@@ -1,3 +1,7 @@
+# this program simulates a Top Trumps card gamme
+# player is assigned 2 cards and chooses one card and one stat to bet against computer
+# highest stat wins
+
 import random
 
 import requests
@@ -12,8 +16,8 @@ def random_pokemon():
         url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number)
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for HTTP errors
-        print()
-        print(response, '\n')
+        print() # added line space
+        print(response, '\n') # added line space
         pokemon = response.json()
         stats = {
             'name': pokemon['name'],
@@ -24,7 +28,7 @@ def random_pokemon():
         }
         return stats
         
-    except requests.exceptions.RequestException as e:
+    except requests.exceptions.RequestException as e: 
         print("Error:", e)
         return None
 
@@ -42,30 +46,29 @@ def choose_pokemon():
     for stat_name, stat_value in my_pokemon2.items():
         print(f"{stat_name.capitalize()}: {stat_value}")
 
-    print()
-    my_choice = int(input(Fore.MAGENTA + 'which pokemon do you want to choose? (1 or 2) '))
+    print() # added line space
+    # added defensive programing .strip() to avoid errors in user input - white spaces
+    my_choice = int(input(Fore.MAGENTA + 'which pokemon do you want to choose? (1 or 2) ').strip()) 
     if my_choice == 1:
         return my_pokemon1
     elif my_choice == 2:
         return my_pokemon2
     else:
         print("Invalid choice")
-        return choose_pokemon()
+        return choose_pokemon() # prompts user for new input
 
 def run():
     chosen_pokemon = choose_pokemon()
-
-    stat_choice = input(Fore.BLUE + 'Which stat do you want to use? (id, height, weight, base_experience) ').lower()
+    # added defensive programing .lower() and .strip() to avoid errors in user input - capitalization and white spaces
+    stat_choice = input(Fore.BLUE + 'Which stat do you want to use? (id, height, weight, base_experience) ').lower().strip()
 
     opponent_pokemon_stats = random_pokemon()
-    opponent_pokemon = opponent_pokemon_stats  # Use the generated stats to represent the opponent's Pokémon
+    opponent_pokemon = opponent_pokemon_stats  # Use the generated stats to represent the opponent's Pokémon 
     print(Fore.RED + 'The opponent chose {}'.format(opponent_pokemon['name']))
-    
     print("Stats:")
     for stat_name, stat_value in opponent_pokemon_stats.items():
         print(f"{stat_name.capitalize()}: {stat_value}")
-
-    print()
+    print() # added line space
 
     my_stat = chosen_pokemon[stat_choice]
     opponent_stat = opponent_pokemon_stats[stat_choice]
@@ -76,7 +79,7 @@ def run():
     else:
         print(Fore.CYAN + 'Draw!')
 
-    print()
+    print() # added line space
         
     print(f'My stat: {my_stat}')
     print(f'Opponent stat: {opponent_stat}')
