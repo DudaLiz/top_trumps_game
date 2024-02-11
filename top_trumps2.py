@@ -12,8 +12,7 @@ def random_pokemon():
         url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number)
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for HTTP errors
-        print()
-        print(response, '\n')
+        print(response)
         pokemon = response.json()
         stats = {
             'name': pokemon['name'],
@@ -42,8 +41,7 @@ def choose_pokemon():
     for stat_name, stat_value in my_pokemon2.items():
         print(f"{stat_name.capitalize()}: {stat_value}")
 
-    print()
-    my_choice = int(input(Fore.MAGENTA + 'which pokemon do you want to choose? (1 or 2) '))
+    my_choice = int(input('which pokemon do you want to choose? (1 or 2)'))
     if my_choice == 1:
         return my_pokemon1
     elif my_choice == 2:
@@ -60,23 +58,19 @@ def run():
     opponent_pokemon_stats = random_pokemon()
     opponent_pokemon = opponent_pokemon_stats  # Use the generated stats to represent the opponent's Pokémon
     print(Fore.RED + 'The opponent chose {}'.format(opponent_pokemon['name']))
-    
+    print("Pokemon number:", opponent_pokemon_stats)
     print("Stats:")
     for stat_name, stat_value in opponent_pokemon_stats.items():
         print(f"{stat_name.capitalize()}: {stat_value}")
 
-    print()
-
     my_stat = chosen_pokemon[stat_choice]
     opponent_stat = opponent_pokemon_stats[stat_choice]
     if my_stat > opponent_stat:
-        print(Fore.GREEN + 'You Win!')
+        print('You Win!')
     elif my_stat < opponent_stat:
-        print(Fore.RED + 'You Lose!')
+        print('You Lose!')
     else:
-        print(Fore.CYAN + 'Draw!')
-
-    print()
+        print('Draw!')
         
     print(f'My stat: {my_stat}')
     print(f'Opponent stat: {opponent_stat}')
