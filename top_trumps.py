@@ -10,6 +10,35 @@ import colorama
 from colorama import Fore
 colorama.init(autoreset=True)
 
+# def random_pokemon():
+#     try:
+#         pokemon_number = random.randint(1, 151)
+#         url = 'https://pokeapi.co/api/v2/pokemon/{}/'.format(pokemon_number)
+#         response = requests.get(url)
+#         response.raise_for_status()  # Raise an exception for HTTP errors
+#         print() # added line space
+#         print(response, '\n') # added line space
+#         pokemon = response.json()
+
+#         base_stats = {}
+#         for stat in pokemon['stats']:
+#             stat_name = stat['stat']['name']
+#             base_stats[stat_name] = stat['base_stat']
+
+#         stats = {
+#             'name': pokemon['name'],
+#             'id': pokemon['id'],
+#             'height': pokemon['height'],
+#             'weight': pokemon['weight'],
+#             'base_experience': pokemon['base_experience']
+#         }
+
+#         new_stats = {'attack': pokemon['stats'][1]['base_stat'],}
+                     
+#         stats.update(new_stats)
+
+#         return stats
+
 def random_pokemon():
     try:
         pokemon_number = random.randint(1, 151)
@@ -19,14 +48,32 @@ def random_pokemon():
         print() # added line space
         print(response, '\n') # added line space
         pokemon = response.json()
+
+        base_stats = {}
+        for stat in pokemon['stats']:
+            stat_name = stat['stat']['name']
+            base_stats[stat_name] = stat['base_stat']
+
         stats = {
             'name': pokemon['name'],
             'id': pokemon['id'],
             'height': pokemon['height'],
             'weight': pokemon['weight'],
-            'base_experience': pokemon['base_experience']
+            'base_experience': pokemon['base_experience'],
+            'attack': base_stats.get('attack'),
+            'defense': base_stats.get('defense'),
+            'special_attack': base_stats.get('special-attack'),
+            'special_defense': base_stats.get('special-defense'),
+            'speed': base_stats.get('speed'),
+            'hp': base_stats.get('hp')
         }
+
         return stats
+    except requests.exceptions.RequestException as e:
+        print("Error:", e)
+        return None
+
+    
         
     except requests.exceptions.RequestException as e: 
         print("Error:", e)
